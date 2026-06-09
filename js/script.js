@@ -2,8 +2,6 @@
 const scroller   = document.getElementById('panoScroller');
 const panoScene  = document.getElementById('panoScene');
 const layerBg    = document.getElementById('layer-bg');
-const layerKuzu  = document.getElementById('layer-kuzu');
-const layerKoc   = document.getElementById('layer-koc');
 const layerNs    = document.getElementById('layer-ns');
 const bird       = document.getElementById('bird');
 let currentOverlay = null;
@@ -35,8 +33,6 @@ let _prevScrollPara = 0, _yBg = 0, _yNs = 0;
   _yBg = Math.max(-28, Math.min(28, _yBg));
   _yNs = Math.max(-14, Math.min(14, _yNs));
   layerBg.style.transform   = `translateY(${_yBg}px)`;
-  layerKuzu.style.transform = `translateY(${(_yNs * 0.6).toFixed(2)}px)`;
-  layerKoc.style.transform  = `translateY(${(_yNs * 0.8).toFixed(2)}px)`;
   layerNs.style.transform   = `translateY(${_yNs}px)`;
   requestAnimationFrame(parallaxLoop);
 })();
