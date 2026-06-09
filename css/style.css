@@ -1,0 +1,156 @@
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#1A2880;--frame:#D4621A;--cream:#EDE2C4;--dur:.55s}
+html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
+
+/* ── PAGES ── */
+.page{position:fixed;inset:0;opacity:0;pointer-events:none;
+       transition:opacity var(--dur) ease;z-index:10}
+.page.active{opacity:1;pointer-events:all}
+
+/* ── OVERLAYS ── */
+.overlay{position:fixed;inset:0;transform:translateY(100%);
+          transition:transform var(--dur) cubic-bezier(.4,0,.2,1),opacity var(--dur) ease;
+          opacity:0;pointer-events:none;overflow-y:auto;z-index:100}
+.overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
+
+/* ── HERO ── */
+#hero{cursor:pointer}
+#hero img{width:100%;height:100%;object-fit:cover;display:block}
+#hero-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+            color:var(--cream);font-family:'Josefin Slab',serif;font-size:13px;
+            letter-spacing:3px;text-transform:uppercase;pointer-events:none;
+            animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+
+/* ── PANO ── */
+#pano{background:var(--bg);overflow:hidden}
+#panoScroller{width:100vw;height:100vh;overflow-x:scroll;overflow-y:hidden;
+               scrollbar-width:none;cursor:grab}
+#panoScroller::-webkit-scrollbar{display:none}
+#panoScroller:active{cursor:grabbing}
+
+#panoScene{position:relative;height:100vh;/* width set by JS */}
+
+/* All layers same size, stacked */
+.layer{
+  position:absolute;top:0;left:0;
+  height:100vh;width:auto;
+  pointer-events:none;
+  will-change:transform;
+}
+/* Base (flow element) */
+#layer-bg{position:relative;z-index:1;display:block}
+
+/* Layer z-order */
+#layer-kuzu{z-index:2}
+#layer-koc{z-index:3}
+#layer-ns{z-index:4}
+#layer-k1{z-index:5}
+#layer-k2{z-index:6}
+#layer-k3{z-index:5}
+#layer-k4{z-index:5}
+#layer-k5{z-index:6}
+
+/* Clickable women */
+/* ── all women: glow + hover ── */
+.woman,.clickable{
+  pointer-events:none;
+  transition:filter .25s ease, transform .25s ease
+}
+@keyframes womanGlow{
+  0%,100%{ filter:drop-shadow(0 -25px 18px rgba(212,98,26,.18)) drop-shadow(0 -12px 8px rgba(237,226,196,.07)) }
+  50%    { filter:drop-shadow(0 -40px 30px rgba(212,98,26,.32)) drop-shadow(0 -20px 14px rgba(237,226,196,.13)) }
+}
+.woman,.clickable{ animation:womanGlow 3.2s ease-in-out infinite }
+/* hover: warm light burst — shows it's interactive */
+.woman:hover,.clickable:hover{
+  animation:none !important;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 -40px 45px rgba(212,98,26,.58))
+    drop-shadow(0 -18px 22px rgba(237,226,196,.30))
+}
+.woman:active,.clickable:active{
+  animation:none !important;
+  filter:brightness(0.65) drop-shadow(0 0 30px rgba(212,98,26,1)) !important;
+  transition:filter 0.05s ease !important
+}
+
+/* ── BIRD ── */
+#bird{position:fixed;top:10vh;left:0;
+       width:300px;height:250px;
+       pointer-events:none;z-index:20;
+       transform:scaleX(-1);
+       will-change:left,transform;
+       background-image:url("../assets/images/bird-sprite.png");
+       background-repeat:no-repeat;
+       background-size:29700px 250px;
+       background-position:0 0;
+       animation:birdSprite 3.3s steps(99) infinite;}
+@keyframes birdSprite{
+  from{background-position-x:0}
+  to  {background-position-x:-29700px}
+}
+
+
+/* ── TOP NAV ── */
+#topNav{position:fixed;top:22px;right:36px;
+           z-index:50;display:flex;gap:36px;align-items:center}
+#topNav button{
+  font-family:'American Typewriter','Courier New',monospace;
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--cream);background:transparent;border:none;
+  padding:4px 0;cursor:pointer;
+  transition:opacity .2s}
+#topNav button:hover{opacity:.65}
+
+/* ── OVERLAY CONTENT ── */
+.overlay-content{min-height:100vh;display:flex;
+                  align-items:flex-start;justify-content:center;
+                  background:var(--bg)}
+.overlay-content img{display:block;max-width:100%;height:auto}
+.close-btn{position:fixed;top:24px;right:28px;z-index:200;
+            width:44px;height:44px;border-radius:50%;
+            background:rgba(26,40,128,.85);
+            border:1.5px solid var(--cream);color:var(--cream);
+            font-size:20px;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            transition:background .2s}
+.close-btn:hover{background:var(--frame)}
+
+/* ── SCROLL INDICATOR ── */
+#scrollIndicator{position:fixed;bottom:30px;left:50%;
+                  transform:translateX(-50%);
+                  display:flex;align-items:center;gap:10px;
+                  color:var(--cream);font-family:'Josefin Slab',serif;
+                  font-size:11px;letter-spacing:3px;
+                  opacity:.6;pointer-events:none;
+                  transition:opacity 1s;z-index:40}
+#scrollIndicator.hidden{opacity:0}
+.arr{animation:arrowBounce 1.5s ease-in-out infinite}
+@keyframes arrowBounce{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+/* ── Hotspot tıklama alanları ── */
+.woman-hotspot{
+  position:absolute;top:20%;height:80%;
+  pointer-events:auto;cursor:pointer;z-index:10;
+}
+/* Hover ve press efektleri (JS ile uygulanır) */
+.woman-hov{
+  animation:none !important;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 -40px 45px rgba(212,98,26,.58))
+    drop-shadow(0 -18px 22px rgba(237,226,196,.30)) !important
+}
+.woman-prs{
+  animation:none !important;
+  filter:brightness(0.65) drop-shadow(0 0 30px rgba(212,98,26,1)) !important;
+  transition:filter 0.05s ease !important
+}
+
+/* kadin3 (akış) — glow animasyonu kaldırıldı */
+#layer-k3 { animation: none !important; filter: none !important; }
+#layer-k3.woman-hov { filter: brightness(1.06) !important; }
+#layer-k3.woman-prs { filter: brightness(0.75) !important; }
