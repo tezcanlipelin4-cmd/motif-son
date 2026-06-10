@@ -150,3 +150,29 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
   transition:filter 0.05s ease !important
 }
 
+
+/* ── DOKUMA IMG (masaüstü) ── */
+.dokuma-img{width:100%;height:100vh;object-fit:cover;}
+
+/* ── MOBİLE UYUMLULUK ── */
+@media (max-width:768px){
+
+  /* Hero */
+  #hero img{object-position:center center}
+  #hero-hint{font-size:10px;letter-spacing:2px;bottom:28px}
+
+  /* Dokuma — tam görsel göster, scroll edilebilir */
+  .dokuma-img{height:auto;object-fit:contain;}
+  #motif .overlay-content{
+    align-items:flex-start !important;
+    padding:0 !important;
+    min-height:100vh;
+  }
+
+  /* Nav butonları */
+  #topNav{top:14px;right:14px;gap:18px}
+  #topNav button{font-size:9px;letter-spacing:2px}
+
+  /* Kapat butonu */
+  .close-btn{top:14px;right:14px;width:36px;height:36px;font-size:16px}
+}
