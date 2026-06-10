@@ -147,11 +147,17 @@ function showOverlay(id){
   if(currentOverlay) closeOverlay(currentOverlay,true);
   currentOverlay=id;
   const el=document.getElementById(id);
+  if(!el){ console.warn('Overlay bulunamadi:',id); return; }
   el.scrollTop=0; el.style.display='block';
+  const vid=el.querySelector('video');
+  if(vid){ vid.currentTime=0; vid.play().catch(()=>{}); }
   requestAnimationFrame(()=>el.classList.add('open'));
 }
 function closeOverlay(id,instant){
   const el=document.getElementById(id);
+  if(!el) return;
+  const vid=el.querySelector('video');
+  if(vid) vid.pause();
   el.classList.remove('open');
   if(instant) el.style.display='none';
   else setTimeout(()=>el.style.display='none',600);
