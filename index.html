@@ -10,19 +10,17 @@
 <body>
 
 <!-- ══ HERO ══ -->
-<div id="hero" class="page active" onclick="showPanoramic()" style="cursor:pointer">
+<div id="hero" class="page active">
   <img src="assets/images/hero.jpg" alt="MOTİF ATLASI">
   <div id="hero-hint"></div>
+  <button id="kesfet-btn" onclick="showPanoramic()">KEŞFET</button>
 </div>
 
 <!-- ══ PANORAMİK ══ -->
 <div id="pano" class="page" style="display:none">
   <nav id="topNav">
-    <button onclick="showOverlay('kadin')">Kadinlar</button>
-    <button onclick="showOverlay('anadolu')">Anadolu</button>
-    <button onclick="showOverlay('motif')">Dokuma</button>
+    <button onclick="showOverlay('atlas')">ATLAS HAKKINDA</button>
   </nav>
-
   <div id="panoScroller">
     <div id="panoScene">
 
@@ -54,19 +52,19 @@
       <!-- ══ Kadın hotspot tıklama alanları ══ -->
       <div class="woman-hotspot" style="left:21%;width:13%;"
            onmouseenter="womanHover(0,true)" onmouseleave="womanHover(0,false)"
-           onclick="womanClick(event,0,'yasam')"></div>
+           onclick="womanClick(event,0,'yasam')"><span class="woman-label">YAŞAM</span></div>
       <div class="woman-hotspot" style="left:36%;width:11%;"
            onmouseenter="womanHover(1,true)" onmouseleave="womanHover(1,false)"
-           onclick="womanClick(event,1,'bereket')"></div>
+           onclick="womanClick(event,1,'bereket')"><span class="woman-label">BEREKET</span></div>
       <div class="woman-hotspot" style="left:46%;width:14%;"
            onmouseenter="womanHover(2,true)" onmouseleave="womanHover(2,false)"
-           onclick="womanClick(event,2,'akis')"></div>
+           onclick="womanClick(event,2,'akis')"><span class="woman-label">AKIŞ</span></div>
       <div class="woman-hotspot" style="left:57%;width:16%;"
            onmouseenter="womanHover(3,true)" onmouseleave="womanHover(3,false)"
-           onclick="womanClick(event,3,'guc')"></div>
-      <div class="woman-hotspot" style="left:69%;width:24%;"
+           onclick="womanClick(event,3,'guc')"><span class="woman-label">GÜÇ</span></div>
+      <div class="woman-hotspot" style="left:75%;width:12%;"
            onmouseenter="womanHover(4,true)" onmouseleave="womanHover(4,false)"
-           onclick="womanClick(event,4,'nazar')"></div>
+           onclick="womanClick(event,4,'nazar')"><span class="woman-label">NAZAR</span></div>
 
     </div>
   </div>
@@ -74,8 +72,19 @@
   <!-- Uçan kuş -->
   <div id="bird"></div>
 
+  <div id="womanProgress">
+    <div class="wp-dots">
+      <span class="wp-dot" data-i="0"></span>
+      <span class="wp-dot" data-i="1"></span>
+      <span class="wp-dot" data-i="2"></span>
+      <span class="wp-dot" data-i="3"></span>
+      <span class="wp-dot" data-i="4"></span>
+    </div>
+    <span id="wp-counter">1 / 5</span>
+  </div>
+
   <div id="scrollIndicator">
-    <span>KAYDİR</span><span class="arr">→</span>
+    <span>KAYDIRARAK KEŞFET</span>
   </div>
 </div>
 
@@ -95,13 +104,6 @@
   </div>
 </div>
 
-<!-- ══ DOKUMA ══ -->
-<div id="motif" class="overlay" style="display:none">
-  <button class="close-btn" onclick="closeOverlay('motif')">✕</button>
-  <div class="overlay-content" style="background:#87CEEB;align-items:center;justify-content:center;padding:0;min-height:100vh;">
-    <img src="assets/images/dokuma-gorsel.png" alt="DOKUMA" class="dokuma-img" style="display:block;">
-  </div>
-</div>
 
 <div id="yasam" class="overlay" style="display:none">
   <button class="close-btn" onclick="closeOverlay('yasam')">✕</button>
@@ -121,21 +123,16 @@
     <img src="assets/images/overlay-guc.jpg" alt="GÜÇ" style="width:100%;display:block;">
   </div>
 </div>
-<div id="anadolu" class="overlay" style="display:none">
-  <button class="close-btn" onclick="closeOverlay('anadolu')">✕</button>
-  <div class="overlay-content" style="background:#00155c;align-items:center;justify-content:center;padding:0;">
-    <video id="anadoluVideo" autoplay muted loop playsinline
-           style="width:100%;max-height:100vh;object-fit:contain;display:block;">
-      <source src="assets/videos/video-anadolu.mp4" type="video/mp4">
-    </video>
-  </div>
-</div>
-<div id="kadin" class="overlay" style="display:none">
-  <button class="close-btn" onclick="closeOverlay('kadin')">✕</button>
-  <div class="overlay-content" style="background:#00155c;align-items:center;justify-content:center;padding:0;">
-    <video id="kadinVideo" autoplay muted loop playsinline
-           style="width:100%;max-height:100vh;object-fit:contain;display:block;">
-      <source src="assets/videos/video-kadin.mp4" type="video/mp4">
+
+
+<div id="site-footer">© 2026 Motif Atlası.</div>
+
+<div id="atlas" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('atlas')">✕</button>
+  <div class="overlay-content" style="background:#00155c;padding:0;display:block;">
+    <video id="atlasVideo" autoplay muted loop playsinline
+           style="width:100%;height:auto;display:block;">
+      <source src="assets/videos/video-atlas.mp4" type="video/mp4">
     </video>
   </div>
 </div>

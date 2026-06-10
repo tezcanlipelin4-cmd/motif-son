@@ -15,13 +15,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 .overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
 
 /* ── HERO ── */
-#hero{cursor:pointer}
+#hero{cursor:default}
 #hero img{width:100%;height:100%;object-fit:cover;display:block}
 #hero-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
             color:var(--cream);font-family:'Josefin Slab',serif;font-size:13px;
             letter-spacing:3px;text-transform:uppercase;pointer-events:none;
             animation:pulse 2.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+#kesfet-btn{
+  position:absolute;bottom:52px;left:50%;transform:translateX(-50%);
+  background:#fbe5cc;
+  border:2px solid #fbe5cc;
+  color:#00155c;
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:15px;letter-spacing:4px;text-transform:uppercase;
+  padding:11px 36px;
+  cursor:pointer;
+  box-shadow:0 0 28px rgba(251,229,204,.6);
+  transition:background .3s,color .3s,box-shadow .3s;
+  z-index:10;
+}
+#kesfet-btn:hover{
+  background:#ffd4a8;border-color:#ffd4a8;
+  box-shadow:0 0 44px rgba(251,229,204,.9);
+}
 
 /* ── PANO ── */
 #pano{background:var(--bg);overflow:hidden}
@@ -98,7 +115,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 #topNav{position:fixed;top:22px;right:36px;
            z-index:50;display:flex;gap:36px;align-items:center}
 #topNav button{
-  font-family:'American Typewriter','Courier New',monospace;
+  font-family:'Josefin Slab',monospace;
   font-size:11px;letter-spacing:4px;text-transform:uppercase;
   color:var(--cream);background:transparent;border:none;
   padding:4px 0;cursor:pointer;
@@ -123,9 +140,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 #scrollIndicator{position:fixed;bottom:30px;left:50%;
                   transform:translateX(-50%);
                   display:flex;align-items:center;gap:10px;
-                  color:var(--cream);font-family:'Josefin Slab',serif;
-                  font-size:11px;letter-spacing:3px;
-                  opacity:.6;pointer-events:none;
+                  color:var(--cream);font-family:'American Typewriter','Courier New',serif;
+                  font-size:15px;letter-spacing:4px;
+                  opacity:.85;pointer-events:none;
                   transition:opacity 1s;z-index:40}
 #scrollIndicator.hidden{opacity:0}
 .arr{animation:arrowBounce 1.5s ease-in-out infinite}
@@ -160,6 +177,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
   /* Hero */
   #hero img{object-position:center center}
   #hero-hint{font-size:10px;letter-spacing:2px;bottom:28px}
+  #kesfet-btn{font-size:11px;letter-spacing:3px;padding:10px 28px;bottom:38px}
 
   /* Dokuma — tam görsel göster, scroll edilebilir */
   .dokuma-img{height:auto;object-fit:contain;}
@@ -175,4 +193,79 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 
   /* Kapat butonu */
   .close-btn{top:14px;right:14px;width:36px;height:36px;font-size:16px}
+}
+
+
+/* ── KADIN İLERLEME GÖSTERGESİ ── */
+#womanProgress{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  display:none;align-items:center;gap:14px;
+  z-index:50;pointer-events:none;
+}
+#womanProgress.visible{display:flex;}
+.wp-dots{display:flex;gap:10px;align-items:center;}
+.wp-dot{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:rgba(251,229,204,0.35);
+  border:1.5px solid rgba(251,229,204,0.6);
+  transition:background .3s,transform .3s;
+}
+.wp-dot.active{
+  background:#fbe5cc;
+  transform:scale(1.45);
+  border-color:#fbe5cc;
+}
+#wp-counter{
+  color:rgba(251,229,204,0.75);
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:13px;letter-spacing:2px;
+}
+
+/* ── FOOTER ── */
+#site-footer{
+  position:fixed;
+  bottom:14px;right:20px;
+  z-index:400;
+  color:rgba(251,229,204,0.65);
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:11px;letter-spacing:1.5px;
+  pointer-events:none;
+  display:none;
+}
+#site-footer.visible{ display:block; }
+
+/* ── KADIN HOVER ETİKETİ ── */
+.woman-label{
+  position:fixed;
+  top:8vh;
+  left:50%;transform:translateX(-50%);
+  color:#fbe5cc;
+  font-family:'American Typewriter','Courier New',serif;
+  font-weight:bold;
+  font-size:clamp(16px,2.2vw,32px);
+  letter-spacing:3px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  transition:opacity .25s ease;
+  z-index:60;
+}
+.woman-hotspot:hover .woman-label{
+  opacity:1;
+}
+
+/* ── ATLAS HAKKINDA overlay ── */
+#atlas{overflow-y:auto;}
+#atlas .overlay-content{
+  display:block;
+  min-height:unset;
+  padding:0;
+  margin:0;
+}
+#atlas video{
+  width:100%;
+  height:auto;
+  display:block;
+  margin:0;padding:0;
 }

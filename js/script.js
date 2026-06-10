@@ -1,3 +1,6 @@
+// Hero başlangıç
+document.getElementById('site-footer').classList.add('visible');
+
 
 const scroller   = document.getElementById('panoScroller');
 const panoScene  = document.getElementById('panoScene');
@@ -99,6 +102,7 @@ let birdX = window.innerWidth / 2 - 150, prevScroll = 0, smoothVel = 0, birdT = 
 
 // ── Hero → Pano ───────────────────────────
 function showPanoramic() {
+  document.getElementById('site-footer').classList.remove('visible');
   const hero = document.getElementById('hero');
   const pano = document.getElementById('pano');
   hero.classList.remove('active');
@@ -110,7 +114,7 @@ function showPanoramic() {
   let scrolled = false;
   const ind = document.getElementById('scrollIndicator');
   scroller.addEventListener('scroll', () => {
-    if (!scrolled) { scrolled = true; ind.classList.add('hidden'); }
+    if (!scrolled) { scrolled = true; ind.classList.add('hidden'); document.getElementById('womanProgress').classList.add('visible'); }
   }, {passive:true});
 }
 
@@ -144,6 +148,7 @@ document.addEventListener('keydown', e=>{
 
 // ── Overlays ──────────────────────────────
 function showOverlay(id){
+  document.getElementById('site-footer').classList.add('visible');
   if(currentOverlay) closeOverlay(currentOverlay,true);
   currentOverlay=id;
   const el=document.getElementById(id);
@@ -154,6 +159,7 @@ function showOverlay(id){
   requestAnimationFrame(()=>el.classList.add('open'));
 }
 function closeOverlay(id,instant){
+  document.getElementById('site-footer').classList.remove('visible');
   const el=document.getElementById(id);
   if(!el) return;
   const vid=el.querySelector('video');
@@ -163,3 +169,29 @@ function closeOverlay(id,instant){
   else setTimeout(()=>el.style.display='none',600);
   if(currentOverlay===id) currentOverlay=null;
 }
+
+
+// ── Kadın ilerleme göstergesi ──────────────
+(function initProgress(){
+  const dots    = Array.from(document.querySelectorAll('.wp-dot'));
+  const counter = document.getElementById('wp-counter');
+  const centers = _wCenters; // [0.276, 0.416, 0.534, 0.653, 0.811]
+
+  function updateProgress(){
+    const sw  = panoScene.offsetWidth || window.innerWidth * 5;
+    const vw  = window.innerWidth;
+    const s   = scroller.scrollLeft;
+    const mid = s + vw / 2;
+    // En yakın kadını bul
+    let closest = 0, minDist = Infinity;
+    centers.forEach((c, i)=>{
+      const dist = Math.abs(c * sw - mid);
+      if(dist < minDist){ minDist = dist; closest = i; }
+    });
+    dots.forEach((d,i)=> d.classList.toggle('active', i === closest));
+    counter.textContent = (closest+1) + ' / 5';
+  }
+
+  scroller.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+})();
