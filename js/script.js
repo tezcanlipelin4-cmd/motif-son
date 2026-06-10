@@ -149,6 +149,8 @@ document.addEventListener('keydown', e=>{
 // ── Overlays ──────────────────────────────
 function showOverlay(id){
   document.getElementById('site-footer').classList.add('visible');
+  const insta = document.getElementById('insta-btn');
+  if(insta) insta.style.display = (id==='atlas') ? 'flex' : 'none';
   if(currentOverlay) closeOverlay(currentOverlay,true);
   currentOverlay=id;
   const el=document.getElementById(id);
@@ -160,6 +162,8 @@ function showOverlay(id){
 }
 function closeOverlay(id,instant){
   document.getElementById('site-footer').classList.remove('visible');
+  const insta = document.getElementById('insta-btn');
+  if(insta) insta.style.display = 'none';
   const el=document.getElementById(id);
   if(!el) return;
   const vid=el.querySelector('video');
