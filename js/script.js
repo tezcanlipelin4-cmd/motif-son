@@ -125,6 +125,7 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
 // ── Hero → Pano ───────────────────────────
 function showPanoramic() {
   document.getElementById('site-footer').classList.remove('visible');
+  document.getElementById('topNav').style.display = 'flex';
   const hero = document.getElementById('hero');
   const pano = document.getElementById('pano');
   hero.classList.remove('active');
