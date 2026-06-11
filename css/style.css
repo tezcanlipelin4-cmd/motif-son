@@ -24,20 +24,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
 #kesfet-btn{
   position:absolute;bottom:52px;left:50%;transform:translateX(-50%);
-  background:#fbe5cc;
-  border:2px solid #fbe5cc;
-  color:#00155c;
+  background:#b83418;
+  border:none;border-radius:22px;
+  color:#fbe5cc;
   font-family:'American Typewriter','Courier New',serif;
-  font-size:15px;letter-spacing:4px;text-transform:uppercase;
-  padding:11px 36px;
+  font-size:18px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;
+  padding:16px 52px;
   cursor:pointer;
-  box-shadow:0 0 28px rgba(251,229,204,.6);
-  transition:background .3s,color .3s,box-shadow .3s;
-  z-index:10;
+  box-shadow:0 4px 0 rgba(0,0,0,0.4);
+  transition:transform .15s, box-shadow .15s;
+  z-index:10;white-space:nowrap;
 }
 #kesfet-btn:hover{
-  background:#ffd4a8;border-color:#ffd4a8;
-  box-shadow:0 0 44px rgba(251,229,204,.9);
+  transform:translateX(-50%) translateY(-2px);
+  box-shadow:0 6px 0 rgba(0,0,0,0.4);
+}
+#kesfet-btn:active{
+  transform:translateX(-50%) translateY(2px);
+  box-shadow:0 2px 0 rgba(0,0,0,0.4);
 }
 
 /* ── PANO ── */
@@ -111,12 +115,19 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 #topNav{position:fixed;top:22px;right:36px;
            z-index:50;display:flex;gap:36px;align-items:center}
 #topNav button{
-  font-family:'Josefin Slab',monospace;
-  font-size:11px;letter-spacing:4px;text-transform:uppercase;
-  color:var(--cream);background:transparent;border:none;
-  padding:4px 0;cursor:pointer;
-  transition:opacity .2s}
-#topNav button:hover{opacity:.65}
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:13px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;
+  color:#fbe5cc;background:#e84217;
+  border:none;border-radius:40px;
+  padding:12px 32px;cursor:pointer;
+  box-shadow:-3px 3px 0 rgba(0,0,0,0.35);
+  transition:transform .15s, box-shadow .15s;}
+#topNav button:hover{
+  transform:translateY(-2px);
+  box-shadow:-3px 5px 0 rgba(0,0,0,0.35);}
+#topNav button:active{
+  transform:translateY(1px);
+  box-shadow:-1px 1px 0 rgba(0,0,0,0.35);}
 
 /* ── OVERLAY CONTENT ── */
 .overlay-content{min-height:100vh;display:flex;
