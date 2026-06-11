@@ -10,11 +10,18 @@ const bird       = document.getElementById('bird');
 let currentOverlay = null;
 
 // ── Scene sizing ───────────────────────────
-// All layers are 7680×1080. Scale to fit 100vh.
+// All layers are 7680×1080.
+// Desktop: height=100vh. Mobile: min(55vh, 100vw) — kare ~7× genişlik.
 function setSceneSize() {
-  const scale  = window.innerHeight / 1080;
-  const W      = Math.round(7680 * scale);
-  panoScene.style.width = W + 'px';
+  const mob = window.innerWidth < 768;
+  const H   = mob
+    ? Math.min(Math.round(window.innerHeight * 0.55), window.innerWidth)
+    : window.innerHeight;
+  const scale = H / 1080;
+  const W     = Math.round(7680 * scale);
+  panoScene.style.width  = W + 'px';
+  panoScene.style.height = H + 'px';
+  document.querySelectorAll('.layer').forEach(l => l.style.height = H + 'px');
 }
 setSceneSize();
 window.addEventListener('resize', setSceneSize);
@@ -88,7 +95,7 @@ let birdX = window.innerWidth / 2 - 150, prevScroll = 0, smoothVel = 0, birdT = 
 let birdFrame = 0, birdDir = 1, birdLastTs = 0;
 const BIRD_FRAMES = 99, BIRD_FW = 300, BIRD_FPS = 22;
 
-(function birdLoop(ts) {
+if (window.innerWidth >= 768) (function birdLoop(ts) {
   // ping-pong: ileri gidip geri döner → loop geçişi sıfırdan belli olmaz
   if (ts - birdLastTs >= 1000 / BIRD_FPS) {
     birdFrame += birdDir;
@@ -109,7 +116,18 @@ const BIRD_FRAMES = 99, BIRD_FW = 300, BIRD_FPS = 22;
   bird.style.left      = birdX + 'px';
   bird.style.transform = `scaleX(-1) translateY(${floatY}px) rotate(${lean * 0.3}deg)`;
   requestAnimationFrame(birdLoop);
-})(0);
+})(0);  // end bird (desktop only)
+
+// ── Mobil dokunma etiketleri ─────────────────
+// Hover olmadığı için tap'te etiket kısa süre gösterilir
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.querySelectorAll('.woman-hotspot').forEach((h, i) => {
+    h.addEventListener('touchstart', () => {
+      womanHover(i, true);
+      setTimeout(() => womanHover(i, false), 600);
+    }, {passive:true});
+  });
+}
 
 // ── Hero → Pano ───────────────────────────
 function showPanoramic() {
