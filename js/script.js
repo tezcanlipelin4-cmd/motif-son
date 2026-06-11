@@ -84,21 +84,32 @@ function womanClick(e, idx, overlayId) {
 })();
 
 // ── Bird ──────────────────────────────────
-// bird: sprite sheet animasyonu CSS ile çalışıyor
 let birdX = window.innerWidth / 2 - 150, prevScroll = 0, smoothVel = 0, birdT = 0;
-(function birdLoop() {
+let birdFrame = 0, birdDir = 1, birdLastTs = 0;
+const BIRD_FRAMES = 99, BIRD_FW = 300, BIRD_FPS = 22;
+
+(function birdLoop(ts) {
+  // ping-pong: ileri gidip geri döner → loop geçişi sıfırdan belli olmaz
+  if (ts - birdLastTs >= 1000 / BIRD_FPS) {
+    birdFrame += birdDir;
+    if (birdFrame >= BIRD_FRAMES - 1) birdDir = -1;
+    else if (birdFrame <= 0) birdDir = 1;
+    bird.style.backgroundPositionX = -(birdFrame * BIRD_FW) + 'px';
+    birdLastTs = ts;
+  }
+  // pozisyon ve yumuşak süzülme
   const cur = scroller.scrollLeft;
   const raw = cur - prevScroll; prevScroll = cur;
-  smoothVel = smoothVel * 0.88 + raw * 0.12;
-  birdX    += smoothVel * 0.38;
+  smoothVel = smoothVel * 0.93 + raw * 0.07;
+  birdX    += smoothVel * 0.32;
   birdX     = Math.max(-160, Math.min(window.innerWidth - 160, birdX));
-  birdT    += 0.014;
-  const floatY  = Math.sin(birdT) * 12 + Math.sin(birdT * 1.6) * 5;
-  const lean    = Math.max(-12, Math.min(12, smoothVel * 0.7));
+  birdT    += 0.010;
+  const floatY = Math.sin(birdT) * 9 + Math.sin(birdT * 1.3) * 4;
+  const lean   = Math.max(-10, Math.min(10, smoothVel * 0.55));
   bird.style.left      = birdX + 'px';
   bird.style.transform = `scaleX(-1) translateY(${floatY}px) rotate(${lean * 0.3}deg)`;
   requestAnimationFrame(birdLoop);
-})();
+})(0);
 
 // ── Hero → Pano ───────────────────────────
 function showPanoramic() {
