@@ -10,18 +10,11 @@ const bird       = document.getElementById('bird');
 let currentOverlay = null;
 
 // ── Scene sizing ───────────────────────────
-// All layers are 7680×1080.
-// Desktop: height=100vh. Mobile: min(55vh, 100vw) — kare ~7× genişlik.
+// All layers are 7680×1080. Scale to fit 100vh.
 function setSceneSize() {
-  const mob = window.innerWidth < 768;
-  const H   = mob
-    ? Math.min(Math.round(window.innerHeight * 0.55), window.innerWidth)
-    : window.innerHeight;
-  const scale = H / 1080;
+  const scale = window.innerHeight / 1080;
   const W     = Math.round(7680 * scale);
-  panoScene.style.width  = W + 'px';
-  panoScene.style.height = H + 'px';
-  document.querySelectorAll('.layer').forEach(l => l.style.height = H + 'px');
+  panoScene.style.width = W + 'px';
 }
 setSceneSize();
 window.addEventListener('resize', setSceneSize);

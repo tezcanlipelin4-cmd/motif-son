@@ -181,51 +181,47 @@ html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
 /* ── MOBİLE UYUMLULUK ── */
 @media (max-width:768px){
 
-  /* ── Panoramik sahne — kare kaydırma ── */
-  #panoScroller{display:flex;align-items:flex-end;cursor:default;}
-  #panoScroller:active{cursor:default;}
-
   /* ── Hero ── */
   #hero img{object-position:center center;}
-  #hero-hint{font-size:10px;letter-spacing:2px;bottom:28px;}
   #kesfet-btn{
     font-size:13px;letter-spacing:3px;
-    padding:12px 32px;border-radius:28px;bottom:60px;
+    padding:12px 32px;bottom:60px;
   }
-
-  /* ── Scroll göstergesi ── */
-  #scrollIndicator span{font-size:9px;letter-spacing:2px;}
 
   /* ── Nav ── */
   #topNav{top:14px;right:14px;}
   #topNav button{
-    font-size:10px;letter-spacing:2px;
-    padding:8px 16px;border-radius:28px;
+    font-size:11px;letter-spacing:2px;
+    padding:9px 18px;
   }
 
-  /* ── Kapat butonu — daha geniş dokunma alanı ── */
+  /* ── Scroll göstergesi ── */
+  #scrollIndicator{bottom:20px;}
+  #scrollIndicator span{font-size:11px;letter-spacing:3px;}
+
+  /* ── Kapat butonu — parmak dokunma alanı ── */
   .close-btn{top:14px;right:14px;width:44px;height:44px;font-size:18px;}
 
-  /* ── Kadın hover etiketleri ── */
-  .woman-label{font-size:clamp(13px,4.5vw,22px);letter-spacing:2px;}
+  /* ── Kadın etiketleri ── */
+  .woman-label{font-size:clamp(14px,4vw,24px);letter-spacing:2px;}
 
   /* ── İlerleme göstergesi ── */
   #womanProgress{bottom:14px;gap:10px;}
   .wp-dot{width:7px;height:7px;}
-  #wp-counter{font-size:10px;letter-spacing:1px;}
+  #wp-counter{font-size:10px;}
+
+  /* ── Overlay — iOS scroll ── */
+  .overlay{-webkit-overflow-scrolling:touch;}
+  .overlay-content{min-height:unset;}
 
   /* ── Footer ── */
-  #site-footer{font-size:10px;bottom:10px;right:14px;letter-spacing:1px;}
+  #site-footer{font-size:10px;bottom:10px;right:14px;}
 
   /* ── Instagram ── */
   #insta-btn{width:26px;height:26px;bottom:12px;left:14px;}
   #insta-btn svg{width:26px;height:26px;}
 
-  /* ── Overlay ── */
-  .overlay{padding:0;}
-  .overlay-content{padding:20px 16px !important;}
-
-  /* ── Kuş — mobilde gizle (performans) ── */
+  /* ── Kuş — mobilde kapat ── */
   #bird{display:none !important;}
 }
 
