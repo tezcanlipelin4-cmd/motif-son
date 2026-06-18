@@ -1,0 +1,334 @@
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#1A2880;--frame:#D4621A;--cream:#EDE2C4;--dur:.55s}
+html,body{width:100%;height:100%;overflow:hidden;background:#00155c}
+
+/* ── PAGES ── */
+.page{position:fixed;inset:0;opacity:0;pointer-events:none;
+       transition:opacity var(--dur) ease;z-index:10}
+.page.active{opacity:1;pointer-events:all}
+
+/* ── OVERLAYS ── */
+.overlay{position:fixed;inset:0;transform:translateY(100%);
+          transition:transform var(--dur) cubic-bezier(.4,0,.2,1),opacity var(--dur) ease;
+          opacity:0;pointer-events:none;overflow-y:auto;z-index:100}
+.overlay.open{transform:translateY(0);opacity:1;pointer-events:all}
+
+/* ── HERO ── */
+#hero{cursor:default}
+#hero img{width:100%;height:100%;object-fit:cover;display:block}
+#hero-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+            color:var(--cream);font-family:'Josefin Slab',serif;font-size:13px;
+            letter-spacing:3px;text-transform:uppercase;pointer-events:none;
+            animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+#kesfet-btn{
+  position:absolute;bottom:52px;left:50%;transform:translateX(-50%);
+  background:#e84217;
+  border:none;border-radius:60px;
+  color:#f5a070;
+  font-family:'Helvetica Neue',Arial,sans-serif;
+  font-size:clamp(16px,2vw,28px);font-weight:900;letter-spacing:5px;text-transform:uppercase;
+  padding:18px 60px;
+  cursor:pointer;
+  box-shadow:none;
+  transition:transform .15s, opacity .15s;
+  z-index:10;white-space:nowrap;
+}
+#kesfet-btn:hover{
+  transform:translateX(-50%) translateY(-2px);
+  opacity:0.9;
+}
+#kesfet-btn:active{
+  transform:translateX(-50%) translateY(2px);
+}
+
+/* ── PANO ── */
+#pano{background:var(--bg);overflow:hidden}
+#panoScroller{width:100vw;height:100vh;overflow-x:scroll;overflow-y:hidden;
+               scrollbar-width:none;cursor:grab}
+#panoScroller::-webkit-scrollbar{display:none}
+#panoScroller:active{cursor:grabbing}
+
+#panoScene{position:relative;height:100vh;/* width set by JS */}
+
+/* All layers same size, stacked */
+.layer{
+  position:absolute;top:0;left:0;
+  height:100vh;width:auto;
+  pointer-events:none;
+  will-change:transform;
+}
+/* Base (flow element) */
+#layer-bg{position:relative;z-index:1;display:block}
+
+/* Layer z-order */
+#layer-kuzu{z-index:2}
+#layer-koc{z-index:3}
+#layer-ns{z-index:4}
+#layer-k1{z-index:5}
+#layer-k2{z-index:6}
+#layer-k3{z-index:5}
+#layer-k4{z-index:5}
+#layer-k5{z-index:6}
+
+/* Clickable women */
+/* ── all women: glow + hover ── */
+.woman,.clickable{
+  pointer-events:none;
+  transition:filter .25s ease, transform .25s ease
+}
+@keyframes womanGlow{
+  0%,100%{ filter:drop-shadow(0 -25px 18px rgba(212,98,26,.18)) drop-shadow(0 -12px 8px rgba(237,226,196,.07)) }
+  50%    { filter:drop-shadow(0 -40px 30px rgba(212,98,26,.32)) drop-shadow(0 -20px 14px rgba(237,226,196,.13)) }
+}
+.woman,.clickable{ animation:womanGlow 3.2s ease-in-out infinite }
+/* hover: warm light burst — shows it's interactive */
+.woman:hover,.clickable:hover{
+  animation:none !important;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 -40px 45px rgba(212,98,26,.58))
+    drop-shadow(0 -18px 22px rgba(237,226,196,.30))
+}
+.woman:active,.clickable:active{
+  animation:none !important;
+  filter:brightness(0.65) drop-shadow(0 0 30px rgba(212,98,26,1)) !important;
+  transition:filter 0.05s ease !important
+}
+
+/* ── BIRD ── */
+#bird{position:fixed;top:10vh;left:0;
+       width:300px;height:250px;
+       pointer-events:none;z-index:20;
+       transform:scaleX(-1);
+       will-change:left,transform;
+       background-image:url("../assets/images/bird-sprite.png");
+       background-repeat:no-repeat;
+       background-size:29700px 250px;
+       background-position:0 0;
+       background-position:0 0;}
+
+
+/* ── TOP NAV ── */
+#topNav{position:fixed;top:22px;right:36px;
+           z-index:50;display:none;gap:36px;align-items:center}
+#topNav button{
+  font-family:'Helvetica Neue',Arial,sans-serif;
+  font-size:clamp(11px,1.1vw,18px);font-weight:900;letter-spacing:4px;text-transform:uppercase;
+  color:#f5a070;background:#e84217;
+  border:none;border-radius:60px;
+  padding:12px 36px;cursor:pointer;
+  box-shadow:none;
+  transition:transform .15s, opacity .15s;}
+#topNav button:hover{
+  transform:translateY(-2px);opacity:0.9;}
+#topNav button:active{
+  transform:translateY(1px);}
+
+/* ── OVERLAY CONTENT ── */
+.overlay-content{min-height:100vh;display:flex;
+                  align-items:flex-start;justify-content:center;
+                  background:#00155c}
+.overlay-content img{display:block;width:1455px;max-width:none;height:auto}
+.close-btn{position:fixed;top:24px;right:28px;z-index:200;
+            width:44px;height:44px;border-radius:50%;
+            background:rgba(26,40,128,.85);
+            border:1.5px solid var(--cream);color:var(--cream);
+            font-size:20px;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            transition:background .2s}
+.close-btn:hover{background:var(--frame)}
+
+/* ── SCROLL INDICATOR ── */
+#scrollIndicator{position:fixed;bottom:30px;left:50%;
+                  transform:translateX(-50%);
+                  display:flex;align-items:center;gap:10px;
+                  color:var(--cream);font-family:'American Typewriter','Courier New',serif;
+                  font-size:15px;letter-spacing:4px;
+                  opacity:.85;pointer-events:none;
+                  transition:opacity 1s;z-index:40}
+#scrollIndicator.hidden{opacity:0}
+.arr{animation:arrowBounce 1.5s ease-in-out infinite}
+@keyframes arrowBounce{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+/* ── Hotspot tıklama alanları ── */
+.woman-hotspot{
+  position:absolute;top:20%;height:80%;
+  pointer-events:auto;cursor:pointer;z-index:10;
+}
+/* Hover ve press efektleri (JS ile uygulanır) */
+.woman-hov{
+  animation:none !important;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 -40px 45px rgba(212,98,26,.58))
+    drop-shadow(0 -18px 22px rgba(237,226,196,.30)) !important
+}
+.woman-prs{
+  animation:none !important;
+  filter:brightness(0.65) drop-shadow(0 0 30px rgba(212,98,26,1)) !important;
+  transition:filter 0.05s ease !important
+}
+
+
+
+
+/* ── Kadın hover labels ── */
+.woman-label{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  background:#e84217;
+  color:#f5a070;
+  font-family:'Helvetica Neue',Arial,sans-serif;
+  font-size:clamp(10px,1.2vw,20px);
+  font-weight:900;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  padding:8px 28px;
+  border-radius:40px;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 0.2s ease;
+  z-index:20;
+}
+.woman-hotspot:hover .woman-label,
+.woman-hov .woman-label{ opacity:1; }
+
+/* GÜÇ — gövde merkezi hotspot içinde %70'te */
+.wh-4 .woman-label{
+  left:70%;
+}
+
+/* Per-woman vertical position (just below each face) */
+   /* YAŞAM  – ağaçlı, yüz ortada */
+   /* BEREKET – ayakta, nar */
+   /* AKIŞ   – oturuyor */
+   /* GÜÇ    – ok, uzun boy */
+   /* NAZAR  – oturuyor */
+/* ── DOKUMA IMG (masaüstü) ── */
+.dokuma-img{width:100%;height:100vh;object-fit:cover;}
+
+/* ── MOBİLE UYUMLULUK ── */
+@media (max-width:768px){
+
+  /* ── Hero ── */
+  #hero img{object-position:center center;}
+  #kesfet-btn{
+    font-size:13px;letter-spacing:3px;
+    padding:12px 32px;bottom:60px;
+  }
+
+  /* ── Nav ── */
+  #topNav{top:14px;right:14px;}
+  #topNav button{
+    font-size:11px;letter-spacing:2px;
+    padding:9px 18px;
+  }
+
+  /* ── Scroll göstergesi ── */
+  #scrollIndicator{bottom:20px;}
+  #scrollIndicator span{font-size:11px;letter-spacing:3px;}
+
+  /* ── Kapat butonu — parmak dokunma alanı ── */
+  .close-btn{top:14px;right:14px;width:44px;height:44px;font-size:18px;}
+
+  /* ── Kadın etiketleri ── */
+  
+
+  /* ── İlerleme göstergesi ── */
+  #womanProgress{bottom:14px;gap:10px;}
+  .wp-dot{width:7px;height:7px;}
+  #wp-counter{font-size:10px;}
+
+  /* ── Overlay — iOS scroll ── */
+  .overlay{-webkit-overflow-scrolling:touch;}
+  .overlay-content{min-height:unset;}
+  .overlay-content img{width:100%;max-width:100%;}
+
+  /* ── Footer ── */
+  #site-footer{font-size:10px;bottom:10px;right:14px;}
+
+  /* ── Instagram ── */
+  #insta-btn{width:26px;height:26px;bottom:12px;left:14px;}
+  #insta-btn svg{width:26px;height:26px;}
+
+  /* ── Kuş — mobilde kapat ── */
+  #bird{display:none !important;}
+}
+
+
+/* ── KADIN İLERLEME GÖSTERGESİ ── */
+#womanProgress{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  display:none;align-items:center;gap:14px;
+  z-index:50;pointer-events:none;
+}
+#womanProgress.visible{display:flex;}
+.wp-dots{display:flex;gap:10px;align-items:center;}
+.wp-dot{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:rgba(251,229,204,0.35);
+  border:1.5px solid rgba(251,229,204,0.6);
+  transition:background .3s,transform .3s;
+}
+.wp-dot.active{
+  background:#fbe5cc;
+  transform:scale(1.45);
+  border-color:#fbe5cc;
+}
+#wp-counter{
+  color:rgba(251,229,204,0.75);
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:13px;letter-spacing:2px;
+}
+
+/* ── FOOTER ── */
+#site-footer{
+  position:fixed;
+  bottom:14px;right:20px;
+  z-index:400;
+  color:rgba(251,229,204,0.65);
+  font-family:'American Typewriter','Courier New',serif;
+  font-size:11px;letter-spacing:1.5px;
+  pointer-events:none;
+  display:none;
+}
+#site-footer.visible{ display:block; }
+
+/* ── KADIN HOVER ETİKETİ ── */
+
+.woman-hotspot:hover 
+
+/* ── ATLAS HAKKINDA overlay ── */
+#atlas{overflow-y:auto;}
+#atlas .overlay-content{
+  display:block;
+  min-height:unset;
+  padding:0;
+  margin:0;
+}
+#atlas video{
+  width:100%;
+  height:auto;
+  display:block;
+  margin:0;padding:0;
+}
+
+/* ── INSTAGRAM BUTONU ── */
+#insta-btn{
+  position:fixed;
+  bottom:16px;left:20px;
+  color:rgba(251,229,204,0.75);
+  width:30px;height:30px;
+  display:none;
+  align-items:center;justify-content:center;
+  transition:color .3s,transform .3s;
+  z-index:300;
+}
+#insta-btn svg{ width:30px;height:30px; }
+#insta-btn:hover{ color:#fbe5cc; transform:scale(1.15); }
+#atlas.open ~ #insta-btn,
+#insta-btn.visible{ display:flex; }

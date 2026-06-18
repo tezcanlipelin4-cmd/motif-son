@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOTİF ATLASI</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div id="hero" class="page active">
+  <img src="assets/images/hero.jpg" alt="MOTİF ATLASI">
+  <div id="hero-hint"></div>
+  <button id="kesfet-btn" onclick="showPanoramic()">KEŞFET</button>
+</div>
+
+<!-- ══ PANORAMİK ══ -->
+<div id="pano" class="page" style="display:none">
+  <div id="panoScroller">
+    <div id="panoScene">
+
+      <!-- Katman 1: Arka Plan (en yavaş, 0.25x) -->
+      <img id="layer-bg" class="layer"
+           src="assets/images/arkaplan.png" draggable="false" alt="">
+<!-- Katman 2: Nesneler (orta hız, 0.6x) -->
+      <img id="layer-ns" class="layer"
+           src="assets/images/obje.png" draggable="false" alt="">
+
+      <!-- Kadınlar (tam hız, 1.0x) -->
+      <img id="layer-k1" class="layer woman clickable" onclick="showOverlay('yasam')"
+           src="assets/images/kadin1.png" draggable="false" alt="">
+
+      <img id="layer-k2" class="layer clickable"
+           src="assets/images/kadin2.png" draggable="false" alt="Bereket"
+           onclick="showOverlay('bereket')">
+
+      <img id="layer-k3" class="layer woman clickable" onclick="showOverlay('akis')"
+           src="assets/images/kadin3.png" draggable="false" alt="">
+
+      <img id="layer-k4" class="layer woman clickable" onclick="showOverlay('guc')"
+           src="assets/images/kadin4.png" draggable="false" alt="">
+
+      <img id="layer-k5" class="layer clickable"
+           src="assets/images/kadin5.png" draggable="false" alt="Nazar"
+           onclick="showOverlay('nazar')">
+
+      <!-- ══ Kadın hotspot tıklama alanları ══ -->
+      <div class="woman-hotspot wh-1" style="left:21%;width:13%;"
+           onmouseenter="womanHover(0,true)" onmouseleave="womanHover(0,false)"
+           onclick="womanClick(event,0,'yasam')"><span class="woman-label">YAŞAM</span></div>
+      <div class="woman-hotspot wh-2" style="left:36%;width:11%;"
+           onmouseenter="womanHover(1,true)" onmouseleave="womanHover(1,false)"
+           onclick="womanClick(event,1,'bereket')"><span class="woman-label">BEREKET</span></div>
+      <div class="woman-hotspot wh-3" style="left:46%;width:14%;"
+           onmouseenter="womanHover(2,true)" onmouseleave="womanHover(2,false)"
+           onclick="womanClick(event,2,'akis')"><span class="woman-label">AKIŞ</span></div>
+      <div class="woman-hotspot wh-4" style="left:57%;width:16%;"
+           onmouseenter="womanHover(3,true)" onmouseleave="womanHover(3,false)"
+           onclick="womanClick(event,3,'guc')"><span class="woman-label">GÜÇ</span></div>
+      <div class="woman-hotspot wh-5" style="left:82%;width:11%;"
+           onmouseenter="womanHover(4,true)" onmouseleave="womanHover(4,false)"
+           onclick="womanClick(event,4,'nazar')"><span class="woman-label">NAZAR</span></div>
+
+    </div>
+  </div>
+
+  <!-- Uçan kuş -->
+  <div id="bird"></div>
+
+  <div id="womanProgress">
+    <div class="wp-dots">
+      <span class="wp-dot" data-i="0"></span>
+      <span class="wp-dot" data-i="1"></span>
+      <span class="wp-dot" data-i="2"></span>
+      <span class="wp-dot" data-i="3"></span>
+      <span class="wp-dot" data-i="4"></span>
+    </div>
+    <span id="wp-counter">1 / 5</span>
+  </div>
+
+  <div id="scrollIndicator">
+    <span>KAYDIRARAK KEŞFET</span>
+  </div>
+</div>
+
+<!-- ══ BEREKET ══ -->
+<div id="bereket" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('bereket')">✕</button>
+  <div class="overlay-content" style="background:#00155c;">
+    <img src="assets/images/overlay-bereket.jpg" alt="BEREKET">
+  </div>
+</div>
+
+<!-- ══ NAZAR ══ -->
+<div id="nazar" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('nazar')">✕</button>
+  <div class="overlay-content" style="background:#00155c;">
+    <img src="assets/images/overlay-nazar.jpg" alt="NAZAR">
+  </div>
+</div>
+
+
+<div id="yasam" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('yasam')">✕</button>
+  <div class="overlay-content" style="background:#00155c;">
+    <img src="assets/images/overlay-yasam.jpg" alt="YAŞAM" style="width:100%;display:block;">
+  </div>
+</div>
+<div id="akis" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('akis')">✕</button>
+  <div class="overlay-content" style="background:#00155c;">
+    <img src="assets/images/overlay-akis.jpg" alt="AKIŞ" style="width:100%;display:block;">
+  </div>
+</div>
+<div id="guc" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('guc')">✕</button>
+  <div class="overlay-content" style="background:#00155c;">
+    <img src="assets/images/overlay-guc.jpg" alt="GÜÇ" style="width:100%;display:block;">
+  </div>
+</div>
+
+
+<nav id="topNav">
+  <button onclick="showOverlay('atlas')">BU PROJE</button>
+</nav>
+<a id="insta-btn" href="https://www.instagram.com" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/>
+  </svg>
+</a>
+<div id="site-footer">© 2026 İlmeğin Hafızası.</div>
+
+<div id="atlas" class="overlay" style="display:none">
+  <button class="close-btn" onclick="closeOverlay('atlas')">✕</button>
+  <div class="overlay-content" style="background:#00155c;padding:0;display:block;">
+    <video id="atlasVideo" autoplay muted loop playsinline
+           style="width:100%;height:auto;display:block;">
+      <source src="assets/videos/video-atlas.mp4" type="video/mp4">
+    </video>
+  </div>
+
+</div>
+<script src="js/script.js"></script>
+
+</body>
+</html>
